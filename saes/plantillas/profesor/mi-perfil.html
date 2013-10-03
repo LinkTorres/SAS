@@ -1,0 +1,77 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+  
+{% endblock %}
+
+{%  block contenido %}
+
+  <h1 id='titulo'>Información Personal</h1>
+
+            <table>
+             <form>
+
+                <tr>
+                        <td>Nombre:</td>
+                        <td> <input type="text" id="nombre" readonly = "readonly" value = "Juan Perez Lopez" size="40"</td>
+                </tr>
+
+                <tr>
+                        <td>RFC:</td>
+                        <td> <input type="text" id="rfc" readonly="readonly" value="CGE060502M6"</td>
+                </tr>
+
+                <tr>
+                        <td>Grado académico:</td>
+                        <td> <input type="text" id="grado" readonly="readonly" value="Doctor" size="10"</td>
+                </tr>
+
+                <tr>
+                        <td>Salario</td>
+                        <td> <input type="text" id="salario" readonly="readonly" value="$ X" size="6"</td>
+                </tr>
+
+                <tr>
+                       <td>Grupos:</td>
+                       <td> <input type="text" id="grupos" readonly = "readonly" value = "3CM1,3CM2,3CM3,3CM4" size="25"</td>
+                </tr>
+
+                <tr>
+                       <td>Materias:</td>
+                       <td><input type="text" id="materias" readonly = "readonly" value = "Ingenieria de Software,etc" size="50"</td>
+                </tr>
+
+                <tr>
+                      <td>Correo institucional:</td>
+                      <td><input type="text" id="institucional" readonly = "readonly" value="jperezl1100@profesor.ipn.mx" size="30"</td>
+                </tr>
+
+                <tr>
+                      <td>Correo personal:</td>
+                      <td><input type="text" id="personal"  size="30"</td>
+                </tr>
+
+                <tr>
+                      <td>Ubicación:</td>
+                      <td><input type="text" id="ubicacion" size:"30"</td>
+                </tr>
+
+                <tr>
+                      <td>Extensión:</td>
+                      <td><input type="text" id="extension" size="12"</td>
+                </tr>
+
+                <tr>
+                      <td>Horario de asesorías</td>
+                      <td><input type="text" id="hasesorias" size="40"</td>
+                </tr>
+             </form>
+         </table>
+                    <br>
+
+{% endblock %}
+
+
+
+		
+	

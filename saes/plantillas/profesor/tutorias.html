@@ -1,0 +1,106 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/profesor/tutoria.css">
+{% endblock %}
+
+{% block archivos_js  %}	
+{% endblock %}
+
+
+{%  block contenido %}
+
+<h1 id="titulo">Tutorías</h1>
+			
+			<table id="tabla-tutorias">
+			<tr>
+				<th>Número</th>
+				<th>Número de Boleta</th>
+				<th>Nombre del Alumno</th>
+				<th>Estado de Solicitud</th>
+				<th></th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2012630991</td>
+				<td class='nombre-alumno'>ALUMNO A </td>
+				<td class="exito">Inscrito como Tutorado</td>
+				<td>--</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>2012630992</td>
+				<td class='nombre-alumno'>ALUMNO B </td>
+				<td class="exito">Inscrito como Tutorado</td>
+				<td><input type="checkbox" checked='checked'></td>>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>2012630993</td>
+				<td class='nombre-alumno'>ALUMNO C </td>
+				<td class="alerta">Solicitud no confirmada</td>
+				<td><input type="checkbox" checked='checked'></td>
+
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>2012630994</td>
+				<td class='nombre-alumno'>ALUMNO D </td>
+				<td class="pendiente">Llenando solicitud</td>
+				<td><input type="checkbox"></td>
+
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>2012630995</td>
+				<td class='nombre-alumno'>ALUMNO E </td>
+				<td class="pendiente">Llenando solicitud</td>
+				<td><input type="checkbox"></td>
+
+			</tr>
+			<tr>
+				<td>6</td>
+				<td><input type='text' maxlength='10'></td>
+				<td class='nombre-alumno'>--PENDIENTE--</td>
+				<td class="disponible">--PENDIENTE--</td>
+				<td>--</td>
+
+			</tr>
+			<tr>
+				<td>7</td>
+				<td><input type='text' maxlength='10'></td>
+				<td class='nombre-alumno'>--PENDIENTE--</td>
+				<td class="disponible">--PENDIENTE--</td>
+				<td>--</td>
+
+			</tr>
+			<tr>
+				<td>8</td>
+				<td><input type='text' maxlength='10'></td>
+				<td class='nombre-alumno'>--PENDIENTE--</td>
+				<td class="disponible">--PENDIENTE--</td>
+				<td>--</td>
+			</tr>
+			</table>
+			<br>
+			<div id='botones' class='center'>
+				<button class="1 btn" class="btn">Enviar Solicitudes</button>
+				<button class="2 btn" onclick="alert('Se ha cancelado satisfactoriamente la solicitud emitida al alumno ALUMNO C [2012630993].')">Cancelar Seleccionadas</button>
+				<button class="btn" onclick="location.href = '/profesor_tutorias_comentar'">Llenar comentarios</button>
+				<button class="4 btn" onclick="alert('generando reporte...')">Ver mi evaluación como tutor</button>
+			</div>
+
+	
+		
+
+
+{% endblock %}
+
+
+	
+
+
+	
+
+	
+			

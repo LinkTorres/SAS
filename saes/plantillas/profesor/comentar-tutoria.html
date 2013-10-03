@@ -1,0 +1,44 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/profesor/tutoria.css">
+{% endblock %}
+
+{% block archivos_js  %}
+{% endblock %}
+
+
+{%  block contenido %}
+			
+			<h1 id="titulo">Comentar sobre alumnos tutorados</h1><br>
+			
+			<table id="tabla-tutorias">
+			<tr>
+				<th>Número</th>
+				<th>Número de Boleta</th>
+				<th>Nombre del Alumno</th>
+				<th>Comentario</th>
+				<th></th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2012630991</td>
+				<td class='nombre-alumno'>ALUMNO A </td>
+				<td class="exito"><textarea id='comentario1' rows="4" cols="50">Ingrese un comentario sobre ALUMNO A...</textarea></td>
+				<td>--</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>2012630992</td>
+				<td class='nombre-alumno'>ALUMNO B </td>
+				<td class="exito"><textarea id='comentario2' rows="4" cols="50" disabled='true'>ALUMNO A es muy buen alumno, le va a ir bien.</textarea></td>
+				<td><input type="checkbox" checked='checked'></td>
+			</tr>
+			</table>
+			<div id='botones' class='center'>
+			<br>
+				<button class="btn" onclick="document.getElementById('comentario2').disabled = false">Editar Seleccionado</button>
+				<button  class="2 btn">Guardar Comentarios</button>
+			</div>
+
+{% endblock %}

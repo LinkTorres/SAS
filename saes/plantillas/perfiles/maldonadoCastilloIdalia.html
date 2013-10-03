@@ -1,0 +1,88 @@
+{% extends 'profesor/base.html' %} 
+
+{% block archivos_css  %}
+
+<link rel="stylesheet" href="{{STATIC_URL}}css/perfiles/perfil-profesor.css">
+	
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+
+
+			<div id='profesor-top'>
+			<table id='tabla-info-profesor'>
+				<tr>
+					<td class='info-profesor'>
+						<h2 id='profesor-nombre'>Maldonado Castillo Idalia</h2>
+						<h3 id='profesor-cargos'>Coordinador de Materia | Profesor</h3>
+						<br>
+						<p id='profesor-mail-institucional'>idalia1102@ipn.mx</p>
+						<p id='profesor-mail-personal'>idaliaESCOM@gmail.com</p>
+						<p id='profesor-cubiculo'>Sistemas computacionales</p>
+						<p id='profesor-telefono'>5672 8000 ext. 5050</p>
+					</td>
+					<td class='perfil-profesor'>
+						<img id='img-profesor' src='maldonadoCastilloIdalia.jpg'>
+					</td>
+				</tr>
+			</table>
+				
+			</div>
+			<div id='profesor-content'>
+				<div id='profesor-left'>
+				<h2>Materias que Imparte</h2>
+				<br>
+					<table id='tabla-materias-profesor'>
+						<tr>
+							<th>Grupo</th>
+							<th>Ubicación</th>
+							<th class='nombre-materia'>Nombre de la materia</th>
+						</tr>
+						<tr>
+							<td>3CM1</td>
+							<td>1101</td>
+							<td>Análisis de Algoritmos</td>
+						</tr>
+						<tr>
+							<td>3CM2</td>
+							<td>1102</td>
+							<td>Análisis de Algoritmos</td>
+						</tr>
+						<tr>
+							<td>3CM3</td>
+							<td>1103	</td>
+							<td>Análisis de Algoritmos</td>
+						</tr>
+					</table>
+				</div>
+				<div id='profesor-right'>
+					<h2>Más información</h2>
+					<br>
+					<p class='label'>Grado</p>
+					<p id='profesor-grado'>Doctorado (IPN-CIC)</p>
+					<br>
+					<p class='label'>Tutorías</p>
+					<p id='profesor-grado'>Sí (6 alumnos disponibles)</p>
+					<br>
+					<p class='label'>Asesorías</p>
+					<p id='profesor-asesoria'>L M J, 13.30 a 15.00</p>
+					<br>
+					<p class='label'>Evaluación del Profesor</p>
+					<p id='profesor-asesoria'>10.0</p>
+					<br>
+					<p class='label'>Índice de Reprobación</p>
+					<p id='profesor-promedio'>1%</p>
+				</div>
+			</div>
+			
+{% endblock %}
+
+
+
+
+
