@@ -1,0 +1,83 @@
+{% extends 'profesor/base.html' %} 
+
+{% block archivos_css  %}
+
+<link rel="stylesheet" href="{{MEDIA_URL}}css/perfiles/perfil-profesor.css">
+	
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+
+
+			<div id='profesor-top'>
+			<table id='tabla-info-profesor'>
+				<tr>
+					<td class='info-profesor'>
+						<h2 id='profesor-nombre'>{{nombre}}</h2>
+						<h3 id='profesor-cargos'>{{rol}} | {{clasificacion}}</h3>
+						<br>
+						<p id='profesor-mail-institucional'>{{email_i}}</p>
+						<p id='profesor-mail-personal'>{{email_p}}</p>
+						<p id='profesor-cubiculo'>{{carrera}}</p>
+						<p id='profesor-telefono'>Casa {{telefono_c}}|Celular {{telefono}}</p>
+					</td>
+					<td class='perfil-profesor'>
+						<img id='img-profesor' src={{MEDIA_URL}}{{foto}} width=160 height=160>
+						
+					</td>
+				</tr>
+			</table>
+				
+			</div>
+			<div id='profesor-content'>
+				<div id='profesor-left'>
+				<h2>Materias que Imparte</h2>
+				<br>
+					<table id='tabla-materias-profesor'>
+						<tr>
+							<th>Grupo</th>
+							<th>Ubicación</th>
+							<th class='nombre-materia'>Nombre de la materia</th>
+						</tr>
+						{%for materia in materias %}
+							<tr>
+								<td>{{materia.grupo}}</td>
+								<td>{{materia.grupo.cve_salon}}</td>
+								<td>{{materia.materia.nombre}}</td>
+							</tr>
+						{% endfor %}
+						
+					</table>
+				</div>
+				<div id='profesor-right'>
+					<h2>Más información</h2>
+					<br>
+					<p class='label'>Grado</p>
+					<p id='profesor-grado'>grado_estudios</p>
+					<br>
+					<p class='label'>Tutorías</p>
+					<p id='profesor-grado'>Sí ({{num}} alumnos disponibles)</p>
+					<p id='profesor-grado'>Grupo tutorado {{grupo}}</p>
+					<br>
+					<p class='label'>Asesorías</p>
+					<p id='profesor-asesoria'>{{entrada}} - {{salida}}</p>
+					<br>
+					<p class='label'>Evaluación del Profesor</p>
+					<p id='profesor-asesoria'></p>
+					<br>
+					<p class='label'>Índice de Reprobación</p>
+					<p id='profesor-promedio'></p>
+				</div>
+			</div>
+			
+{% endblock %}
+
+
+
+
+

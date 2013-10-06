@@ -1,0 +1,16 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+	
+<link rel="stylesheet" href="{{MEDIA_URL}}css/perfiles/perfil-profesor.css">
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+
+<embed src={{MEDIA_URL}}fotos/calendario.pdf width=800 height=1000 href="{{MEDIA_URL}}fotos/calendario.pdf"></embed>
+{% endblock %}

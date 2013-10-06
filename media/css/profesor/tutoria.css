@@ -1,0 +1,35 @@
+#tabla-tutorias{
+	border:1px solid black;
+	width:100%;
+
+}
+
+#tabla-tutorias td{
+	text-align:center;
+	height:40px;
+}
+
+#tabla-tutorias td.nombre-alumno{
+	width:40%;
+}
+
+
+#tabla-tutorias td.exito{
+	color:green;
+}
+
+#tabla-tutorias td.pendiente{
+	color:orange;
+}
+
+#tabla-tutorias td.alerta{
+	color:red;
+}
+
+#tabla-tutorias td.disponible{
+
+}
+
+#tabla-tutorias tr{
+	background-color:#eeeeee;
+}

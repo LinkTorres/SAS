@@ -1,0 +1,171 @@
+{% extends 'profesor/base.html' %} 
+
+
+{% block archivos_css  %}
+
+
+<link rel="stylesheet" href="{{MEDIA_URL}}css/horarioProfesor.css">
+	
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+<div id="innerContent">
+					<h1 id="titulo">Grupo {{idg}} </h1>
+					<br> 
+					{%if "Matutino" in turno%}
+						<div id="container-tabla-horario">
+						<table id='tabla-horas'>
+							<tr><td>07.00<br>08.30</td></tr>
+							<tr><td>08.30<br>10.00</td></tr>
+							<tr><td>10.30<br>12.00</td></tr>
+							<tr><td>12.00<br>13.30</td></tr>
+							<tr><td>13.30<br>15.00</td></tr>
+						</table>
+						<table id="dias-horario">
+								<tr>
+									<td class=m5> Lunes</td>
+									<td class=m5> Martes</td>
+									<td class=m5>Miercoles</td>
+									<td class=m5>Jueves</td>
+									<td class=m5>Viernes</td>
+								</tr>
+						</table>
+							<table id="tabla-horario">
+								
+								<tr>
+									<td class={{m1}}>{{materia1}}</td>
+									<td class={{m2}}>{{materia2}}</td>
+									<td class={{m2}}>{{materia2}}</td>
+									<td class={{m1}}>{{materia1}}</td>
+									<td class={{m2}}>{{materia2}}</td>
+								</tr>
+								<tr>
+									<td class={{m3}}>{{materia3}}</td>
+									<td class={{m4}}>{{materia4}}</td>
+									<td class={{m3}}>{{materia3}}</td>
+									<td class={{m3}}>{{materia3}}</td>
+									<td class={{m1}}>{{materia1}}</td>
+								</tr>
+								<tr>
+									<td class={{m4}}>{{materia4}}</td>
+									<td class={{m5}}>{{materia5}}</td>
+									<td class={{m5}}>{{materia5}}</td>
+									<td class={{m4}}>{{materia4}}</td>
+									<td class={{m5}}>{{materia5}}</td>
+								</tr>
+								<tr>
+									<td class={{m6}}>{{materia6}}</td>
+									<td class={{m7}}>{{materia7}}</td>
+									<td class={{m6}}>{{materia6}}</td>
+									<td class={{m6}}>{{materia6}}</td>
+									<td class={{m7}}>{{materia7}}</td>
+								</tr>
+								<tr>
+									<td class={{m8}}>{{materia8}}</td>
+									<td class={{m8}}>{{materia8}}</td>
+									<td class={{m7}}>{{materia7}}</td>
+									<td class={{m6}}>{{materia8}}</td>
+									<td>x</td>
+								</tr>
+							</table>
+						</div>
+						<div id="container-infobar-horario">
+						<table id="tabla-infobar-horario">
+							<tr><td class={{m1}}>{{materia1}}<br>{{prof1}}</tr>
+							<tr><td class={{m2}}>{{materia2}}<br>{{prof2}}</tr>
+							<tr><td class={{m3}}>{{materia3}}<br>{{prof3}}</tr>
+							<tr><td class={{m4}}>{{materia4}}<br>{{prof4}}</tr>
+							<tr><td class={{m5}}>{{materia5}}<br>{{prof5}}</tr>
+							<tr><td class={{m6}}>{{materia6}}<br>{{prof6}}</tr>
+							<tr><td class={{m7}}>{{materia7}}<br>{{prof7}}</tr>
+							<tr><td class={{m8}}>{{materia8}}<br>{{prof8}}</tr>
+						</table>
+						</div>
+					{% endif %}
+					{%if "Vespertino" in turno%}
+						<br> 
+						<div id="container-tabla-horario">
+						<table id='tabla-horas'>
+							<tr><td>13.30<br>15.00</td></tr>
+							<tr><td>15.00<br>16.30</td></tr>
+							<tr><td>16.30<br>18.00</td></tr>
+							<tr><td>18.30<br>20.00</td></tr>
+							<tr><td>20.00<br>21.30</td></tr>
+						</table>
+						<table id="dias-horario">
+								<tr>
+									<td class=m5> Lunes</td>
+									<td class=m5> Martes</td>
+									<td class=m5>Miercoles</td>
+									<td class=m5>Jueves</td>
+									<td class=m5>Viernes</td>
+								</tr>
+						</table>
+							<table id="tabla-horario">
+								<tr>
+									<td class={{m8}}>{{materia8}}</td>
+									<td class={{m8}}>{{materia8}}</td>
+									<td class={{m7}}>{{materia7}}</td>
+									<td class={{m6}}>{{materia8}}</td>
+									<td>x</td>
+								</tr>
+								<tr>
+									<td class={{m9}}>{{materia9}}</td>
+									<td class={{m10}}>{{materia10}}</td>
+									<td class={{m10}}>{{materia10}}</td>
+									<td class={{m9}}>{{materia9}}</td>
+									<td class={{m10}}>{{materia10}}</td>
+								</tr>
+								<tr>
+									<td class={{m11}}>{{materia11}}</td>
+									<td class={{m12}}>{{materia12}}</td>
+									<td class={{m11}}>{{materia11}}</td>
+									<td class={{m11}}>{{materia11}}</td>
+									<td class={{m9}}>{{materia9}}</td>
+								</tr>
+								<tr>
+									<td class={{m12}}>{{materia12}}</td>
+									<td class={{m13}}>{{materia13}}</td>
+									<td class={{m13}}>{{materia13}}</td>
+									<td class={{m12}}>{{materia12}}</td>
+									<td class={{m13}}>{{materia13}}</td>
+								</tr>
+								<tr>
+									<td class={{m14}}>{{materia14}}</td>
+									<td>x</td>
+									<td class={{m14}}>{{materia14}}</td>
+									<td class={{m14}}>{{materia14}}</td>
+									<td>x</td>
+								</tr>
+							</table>
+						</div>
+						<div id="container-infobar-horario">
+						<table id="tabla-infobar-horario">
+							
+							<tr><td class={{m6}}>{{materia6}}<br>{{prof6}}</tr>
+							<tr><td class={{m7}}>{{materia7}}<br>{{prof7}}</tr>
+							<tr><td class={{m8}}>{{materia8}}<br>{{prof8}}</tr>
+							<tr><td class={{m9}}>{{materia9}}<br>{{prof9}}</tr>
+							<tr><td class={{m10}}>{{materia10}}<br>{{prof10}}</tr>
+							<tr><td class={{m11}}>{{materia11}}<br>{{prof11}}</tr>
+							<tr><td class={{m12}}>{{materia12}}<br>{{prof12}}</tr>
+							<tr><td class={{m13}}>{{materia13}}<br>{{prof13}}</tr>
+							<tr><td class={{m14}}>{{materia14}}<br>{{prof14}}</tr>
+							<tr><td class={{m15}}>{{materia15}}<br>{{prof15}}</tr>
+						</table>
+						</div>
+						{% endif %}
+				</div>
+
+{% endblock %}
+
+	
+			
+
+
+		

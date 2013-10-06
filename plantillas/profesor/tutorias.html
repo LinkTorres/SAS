@@ -1,0 +1,53 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/profesor/tutoria.css">
+{% endblock %}
+
+{% block archivos_js  %}	
+{% endblock %}
+
+
+{%  block contenido %}
+
+<h1 id="titulo">Tutorías</h1>
+			
+			<table id="tabla-tutorias">
+			<tr>
+				<th>Número de Boleta</th>
+				<th>Nombre del Alumno</th>
+				<th>Estado de Solicitud</th>
+				<th></th>
+			</tr>
+			{%for alumno in Tutorado %}
+			<tr>
+				<td>{{alumno}}</td>
+				<td class='nombre-alumno'>{{alumno.cve_usuario.nombre}} {{alumno.cve_usuario.apellidoPaterno}} {{alumno.cve_usuario.apellidoMaterno}}</td>
+				<td class="exito">Inscrito como Tutorado</td>
+				<td>--</td>
+			</tr>
+			{% endfor %}
+			
+			</table>
+			<br>
+			<div id='botones' class='center'>
+				<button class="1 btn" class="btn">Enviar Solicitudes</button>
+				<button class="2 btn" onclick="alert('Se ha cancelado satisfactoriamente la solicitud emitida al alumno ALUMNO C [2012630993].')">Cancelar Seleccionadas</button>
+				<button class="btn" onclick="location.href = '/profesor_tutorias_comentar'">Llenar comentarios</button>
+				<button class="4 btn" onclick="alert('generando reporte...')">Ver mi evaluación como tutor</button>
+			</div>
+
+	
+		
+
+
+{% endblock %}
+
+
+	
+
+
+	
+
+	
+			

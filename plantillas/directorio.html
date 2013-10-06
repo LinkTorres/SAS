@@ -1,0 +1,63 @@
+
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+	
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+
+<!-- area de trabajo -->
+			<h1 id='titulo'>Directorio</h1>
+			<center>
+			<br>
+			<form method="GET" action="/perfiles_profesor">
+			<h2>Buscar Profesores</h2>
+			
+			<input list='profes' id ="group" name="grup" style='width:250px'>
+			<datalist id='profes'>
+			{%for prof in profesoresList %}
+				<option>{{prof}}</option>
+			{% endfor %}
+			</datalist>
+			<input type="submit" value="Buscar ..."/>
+			</form>
+			
+			<br>
+			<br>
+			<br>
+			<h2>Buscar Materias</h2>
+			
+			<input list='materias' style='width:250px'>
+			<datalist id='materias'>
+			{%for materia in materiasList %}
+				<option>{{materia}}</option>
+			{% endfor %}
+			</datalist>
+			<button class="btn" onclick="location.href = '/perfiles_materia'">Buscar ...</button>
+			
+			<br>
+			<br>
+			<br>
+			<form method="GET" action="/perfiles_grupo">
+			<h2>Buscar Grupos</h2>
+			
+			<input list='grupos' id ="group" name="grup" style='width:250px'>
+			<datalist id='grupos'>
+			{%for grupo in gruposList %}
+				<option>{{grupo}}</option>
+			{% endfor %}
+			</datalist>
+			<input type="submit" value="Buscar ..."/>
+			</form>
+			</center>
+
+{% endblock %}
+
+	
+			

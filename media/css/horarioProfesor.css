@@ -1,0 +1,103 @@
+/*estilo del horario*/
+#tabla-horario{
+	width:90%;
+	height:100%;
+	text-align:center;
+	float:left;
+}
+
+#tabla-horas{
+	float:left;
+	height:100%;
+	font-size:10pt;
+	padding:3px;
+}
+
+#container-tabla-horario{
+	width:70%;
+	height:400px;
+	float:left;
+}
+
+#container-infobar-horario{
+	padding:5px;
+	border:3px solid #cccccc;
+	width:20%;
+	height:385px;
+	border-radius:10px;
+	float:left;
+	margin-left:20px;
+}
+
+
+#tabla-horario td{
+	height:20%;
+	width:20%;
+	border:1px solid #999999;
+	border-style:dotted;
+	padding:2px;
+	border-radius:5px;
+	font-size:9pt;
+}
+#dias-horario td{
+	height:5%;
+	width:22%;
+	border-style: none;
+	padding:3px;
+	border-radius:5px;
+	font-size:11pt;
+}
+
+#tabla-horario td.m1{
+	border:0;
+	background-color:#ADD8E6;
+}
+#tabla-horario td.m5{
+	border:0;
+	background-color:#0000FF;
+}
+#tabla-horario td.m2{
+	border:0;
+	background-color:orange;
+}
+
+#tabla-horario td.m3{
+	border:0;
+	background-color:yellow;
+}
+
+#tabla-horario td.m4{
+	border:0;
+	background-color:#90EE90;
+}
+
+#tabla-infobar-horario{
+	width:100%;
+	text-align:center;
+	font-size:9pt;
+}
+
+#tabla-infobar-horario td{
+	
+	border-radius:10px;
+	height:50px;
+	padding:5px;
+	
+	
+}
+
+#tabla-infobar-horario td.m1{
+	border:1px solid #ADD8E6;
+}
+
+#tabla-infobar-horario td.m2{
+	border:1px solid orange;
+}
+#tabla-infobar-horario td.m3{
+	border:1px solid yellow;
+}
+#tabla-infobar-horario td.m4{
+	border:1px solid #90EE90;
+}
+
+
