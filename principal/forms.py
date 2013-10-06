@@ -3,9 +3,10 @@ from django import forms
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
+from django.forms import ModelForm
 ###########     
 
-from models import Usuario
+from models import *
 User = get_user_model()
 
 
@@ -51,3 +52,12 @@ class CambiarusuarioForm(forms.ModelForm):
 class InicioForm(forms.Form):
     usuario = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Usuario', 'type':'text', 'autofocus':'True'}), required=True)
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder':'Password','type':'password',}), required=True)
+
+class UsuarioForm(ModelForm):
+    class Meta:
+         model = Usuario
+         
+
+
+
+

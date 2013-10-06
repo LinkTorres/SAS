@@ -25,11 +25,13 @@ urlpatterns = patterns('',
 	url(r'^perfiles_grupo/$','principal.views.perfiles_grupo'),
 	url(r'^profesor_tutorias_comentar/$','principal.views.profesor_tutorias_comentar'),
 	url(r'^cerrar/$', 'principal.views.cerrar'),
+	url(r'^pdf/$', 'principal.views.pdf'),
 
 
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^admin/', include(admin.site.urls)),
-	url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,}),
+	url(r'media/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+  	url(r'static/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 )
 
 

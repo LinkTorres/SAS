@@ -8,7 +8,7 @@ from django.dispatch import receiver
 from django.core.validators import RegexValidator
 
 generos=(('M', 'Masculino'),('F', 'Femenino'))
-clasificaciones=(('Alumnos', 'Alumnos'),('Profesores', 'Profesores'))
+clasificaciones=(('Alumnos', 'Alumnos'),('Profesores', 'Profesores'),('Empleado_escolar','Empleado_escolar'))
 clasificacion_materias=(('Institucional', 'Institucional'),('Cientifica_basica', 'Científica_basica'),
                 ('Profesional', 'Profesional'),('Terminal_integracion', 'Terminal_integración'))
 tipo_materias=(('Obligatoria', 'Obligatoria'),('Optativa', 'Optativa'))
@@ -22,7 +22,7 @@ tipos_alumnos=(('Historico','Histórico'),('Nuevo_Ingreso','Nuevo Ingreso'),('Re
 status_empleados=(('Activo', 'Activo'),('Sabatico', 'Sabático'),('Incapacidad','Incapacidad'))
 roles_academicos=(('Coordinador', 'Coordinador'),('JefeAsignatura', 'JefeAsignatura'))
 tipo_profesores=(('Base', 'Base'),('Interino', 'Interino'))
-
+turno =(('Matutino','Matutino'),('Vespertino','Vespertino'))
 
 
 #***********************************************************************************************************
@@ -92,7 +92,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
 class Salon(models.Model):
     cve_salon = models.IntegerField(unique=True, db_index=True) #primary_key=True
-    USERNAME_FIELD = 'cve_salon'
+   
     def __unicode__(self):
         return str(self.cve_salon)
 
@@ -102,7 +102,7 @@ class Laboratorio(models.Model):
     nombre = models.CharField(max_length=30, unique=True, db_index=True)
     tipo = models.CharField(max_length=20, choices=tipos_laboratorios)
     ubicacion = models.CharField(max_length=30, blank=True,null=True)
-    USERNAME_FIELD = ("nombre")
+    
     def __unicode__(self):
         return self.nombre
 
@@ -116,7 +116,6 @@ class EmpleadoEscolar(models.Model):
     carrera = models.CharField(max_length=40)
     salario = models.FloatField(null=True,blank=True)
     lab_a_mi_cargo = models.ForeignKey(Laboratorio, null=True,blank=True)
-    USERNAME_FIELD = 'cve_usuario'
     def __unicode__(self):
         return str(self.cve_usuario)
 
@@ -125,19 +124,76 @@ class EmpleadoEscolar(models.Model):
 class Grupo(models.Model):
     cve_grupo = models.CharField(max_length=4, unique=True, db_index=True)
     cve_salon = models.ForeignKey(Salon)
-    USERNAME_FIELD = 'cve_grupo'
+    turno = models.CharField(max_length=30, choices=turno)
     def __unicode__(self):
         return self.cve_grupo
+
+class Depto(models.Model):
+    nombre_depto = models.CharField(max_length=30,unique=True, db_index=True)
+    ubicacion = models.CharField(max_length=50, blank=True,null=True)
+    jefe_depto = models.ForeignKey(Usuario,blank=True,null=True)
+    def __unicode__(self):
+        return self.nombre_depto
+
+class Horario(models.Model):
+    cve_horario = models.IntegerField(unique=True,db_index=True)
+    class Meta:
+        ordering = ('cve_horario',)
+    def __unicode__(self):
+        return str(self.cve_horario)
+
+
 #***********************************************************************************************************
+class Materia(models.Model):
+    cve_materia = models.CharField(max_length=4, unique=True, db_index=True)
+    nombre = models.CharField(max_length=30)
+    creditos = models.FloatField()
+    plan_estudios = models.CharField(max_length=4)
+    clasificacion = models.CharField(max_length=30, choices=clasificacion_materias)
+    tipo= models.CharField(max_length=12, choices=tipo_materias)
+    nivel = models.CharField(max_length=1, choices=niveles)
+    coordinador = models.ForeignKey(Usuario,blank=True,null=True)
+    depto = models.ForeignKey(Depto,blank=True,null=True)
+    materia_antecedente = models.ForeignKey('self', null=True,blank=True,related_name='materia_materia_antecedente')
+    materia_siguiente = models.ForeignKey('self', null=True, blank=True, related_name='materia_materia_siguiente')
+    def __unicode__(self):
+        return '%s %s' % (self.cve_materia,self.nombre)
+
 
 class Profesor(models.Model):
-    cve_usuario = models.ForeignKey(EmpleadoEscolar)
+    
+    cve_usuario = models.ForeignKey(Usuario)
     rol_academico = models.CharField(max_length=30, choices=roles_academicos,null=True)
     tipo = models.CharField(max_length=30, choices=tipo_profesores)
     grupo_tutorado = models.ForeignKey(Grupo,null=True,blank=True)
-    USERNAME_FIELD = 'cve_usuario'
+
+    status = models.CharField(max_length=20, choices=status_empleados)
+    hora_entrada = models.CharField(max_length=5)
+    hora_salida = models.CharField(max_length=5)
+    grado_estudios = models.CharField(max_length=30 )
+    carrera = models.CharField(max_length=40)
+    salario = models.FloatField(null=True,blank=True)
+    lab_a_mi_cargo = models.ForeignKey(Laboratorio, null=True,blank=True)
+
     def __unicode__(self):
         return str(self.cve_usuario)
+
+
+class MateriaImpartidaEnGrupo(models.Model):
+    materia = models.ForeignKey(Materia)
+    grupo = models.ForeignKey(Grupo)
+    horario = models.ForeignKey(Horario)
+    profesor = models.ForeignKey(Profesor)
+
+    class Meta:
+        unique_together = (("materia", "grupo"),("grupo", "horario"))
+    def __str__(self):
+        return '%s %s' % (self.materia, self.grupo)
+
+
+
+
+
 
 #***********************************************************************************************************
 
@@ -148,36 +204,14 @@ class Alumno(models.Model):
     promedio_escuela_procedencia = models.FloatField()
     tutor_legal = models.CharField(max_length=50)
     tutor_escolar = models.ForeignKey(Profesor,null=True,blank=True)
-    USERNAME_FIELD = 'cve_usuario'
     def __unicode__(self):
         return str(self.cve_usuario)
 #***********************************************************************************************************
 
-class Depto(models.Model):
-    nombre_depto = models.CharField(max_length=30,unique=True, db_index=True)
-    ubicacion = models.CharField(max_length=50, blank=True,null=True)
-    jefe_depto = models.ForeignKey(Profesor,blank=True,null=True)
-    USERNAME_FIELD = 'nombre_depto'
-    def __unicode__(self):
-        return self.nombre_depto
 
 #***********************************************************************************************************
 
-class Materia(models.Model):
-    cve_materia = models.CharField(max_length=4, unique=True, db_index=True)
-    nombre = models.CharField(max_length=30)
-    creditos = models.FloatField()
-    plan_estudios = models.CharField(max_length=4)
-    clasificacion = models.CharField(max_length=30, choices=clasificacion_materias)
-    tipo= models.CharField(max_length=12, choices=tipo_materias)
-    nivel = models.CharField(max_length=1, choices=niveles)
-    coordinador = models.ForeignKey(Profesor,blank=True,null=True)
-    depto = models.ForeignKey(Depto,blank=True,null=True)
-    materia_antecedente = models.ForeignKey('self', null=True,blank=True,related_name='materia_materia_antecedente')
-    materia_siguiente = models.ForeignKey('self', null=True, blank=True, related_name='materia_materia_siguiente')
-    USERNAME_FIELD = 'cve_materia'
-    def __unicode__(self):
-        return '%s %s' % (self.cve_materia,self.nombre)
+
 
 
 #***********************************************************************************************************
@@ -188,7 +222,6 @@ class Ets(models.Model):
     hora = models.TimeField()
     evaluador = models.ForeignKey(Profesor)
     salon=models.ForeignKey(Salon)
-    USERNAME_FIELD = (("cve_materia", "turno"),)
 
     class Meta:
         unique_together = (("cve_materia", "turno"),)
@@ -199,31 +232,11 @@ class Ets(models.Model):
 
 #***********************************************************************************************************
 
-class Horario(models.Model):
-    cve_horario = models.IntegerField(unique=True,db_index=True)
-    lunes = models.CharField(max_length=11,blank=True,null=True)
-    martes = models.CharField(max_length=11,blank=True,null=True)
-    miercoles = models.CharField(max_length=11,blank=True,null=True)
-    jueves = models.CharField(max_length=11,blank=True,null=True)
-    viernes = models.CharField(max_length=11,blank=True,null=True)
-    USERNAME_FIELD =("cve_horario")
-    class Meta:
-        ordering = ('cve_horario',)
-    def __unicode__(self):
-        return str(self.cve_horario)
+
 
 #***********************************************************************************************************
 
-class MateriaImpartidaEnGrupo(models.Model):
-    materia = models.ForeignKey(Materia)
-    grupo = models.ForeignKey(Grupo)
-    horario = models.ForeignKey(Horario)
-    USERNAME_FIELD =(("materia","grupo","horario"),)
 
-    class Meta:
-        unique_together = (("materia", "grupo"),("grupo", "horario"))
-    def __str__(self):
-        return '%s %s' % (self.materia, self.grupo)
 
 #***********************************************************************************************************
 
@@ -231,7 +244,6 @@ class MateriaImpartidaEnLab(models.Model):
     cve_materia_grupo = models.ForeignKey(MateriaImpartidaEnGrupo)
     nombre_lab = models.ForeignKey(Laboratorio)
     dia = models.CharField(max_length=10,choices=dias)
-    USERNAME_FIELD = (("cve_materia_grupo", "nombre_lab"),)
 
     class Meta:
         unique_together = (("cve_materia_grupo", "nombre_lab"),)
@@ -246,7 +258,6 @@ class AlumnoTomaEts(models.Model):
     alumno = models.ForeignKey(Alumno)
     ets = models.ForeignKey(Ets)
     calificacion = models.IntegerField(null=True, blank=True)
-    USERNAME_FIELD = (("alumno", "ets"),)
 
     class Meta:
         unique_together = (("alumno", "ets"),)
@@ -258,34 +269,12 @@ class AlumnoTomaEts(models.Model):
 
 
 
-#***********************************************************************************************************
-class ProfesorImparteMateria(models.Model):
-    profesor = models.ForeignKey(Profesor)
-    materia = models.ForeignKey(Materia)
-    USERNAME_FIELD = (("profesor", "materia"),)
-    class Meta:
-        unique_together = (("profesor", "materia"),)
-        ordering = ('profesor',)
-    def __str__(self):
-        return '%s %s' % (self.profesor,self.materia)
 
-#***********************************************************************************************************
-class ProfesorDaClaseEnGrupo(models.Model):
-    profesor = models.ForeignKey(Profesor)
-    materia_grupo = models.ForeignKey(MateriaImpartidaEnGrupo)
-    USERNAME_FIELD = (("profesor", "materia_grupo"),)
-
-    class Meta:
-        unique_together = (("profesor", "materia_grupo"),)
-        ordering = ('profesor',)
-    def __str__(self):
-        return '%s %s' % (self.profesor,self.materia_grupo)
 #***********************************************************************************************************
 class AlumnoTomaClaseEnGrupo(models.Model):
     alumno = models.ForeignKey(Alumno)
     materia_grupo = models.ForeignKey(MateriaImpartidaEnGrupo)
     calificacion=models.IntegerField(null=True, blank=True)
-    USERNAME_FIELD = (("alumno", "materia_grupo"),)
     class Meta:
         unique_together = (("alumno", "materia_grupo"),)
         ordering = ('alumno',)
