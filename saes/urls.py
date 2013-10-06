@@ -24,6 +24,7 @@ urlpatterns = patterns('',
 	url(r'^perfiles_materia/$','principal.views.perfiles_materia'),
 	url(r'^perfiles_grupo/$','principal.views.perfiles_grupo'),
 	url(r'^profesor_tutorias_comentar/$','principal.views.profesor_tutorias_comentar'),
+	url(r'^profesor_guarda_calificacion/$','principal.views.profesor_guarda_calificacion'),
 	url(r'^cerrar/$', 'principal.views.cerrar'),
 	url(r'^pdf/$', 'principal.views.pdf'),
 

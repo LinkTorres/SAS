@@ -180,6 +180,7 @@ def profesor_registrar_calificaciones(request):
     grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
     return render_to_response('profesor/registrar-calificaciones.html',locals(),context_instance=RequestContext(request))
 
+
 def directorio(request):
     profesoresList= Profesor.objects.all()
     materiasList= Materia.objects.all()
@@ -208,18 +209,32 @@ def profesor_tutorias(request):
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
     usuario = request.user
     Tutorado=Alumno.objects.filter(tutor_escolar=usuario)
-    nom=Usuario.objects.get(clave=str(usuario))
-    nombre=nom.nombre + " "+ nom.apellidoPaterno + " " + nom.apellidoMaterno
     print Tutorado
     return render_to_response('profesor/tutorias.html',locals(),context_instance=RequestContext(request))
 
 def profesor_ingresa_calificacion(request):
     profesor=request.user
-    materia=request.GET['materia']
-    print materia
-    print "***"
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    materia=request.GET['materia']
+    materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+    request.session["materiaGrupo"] = materiaGrupo
+    alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
+    print alumnos.values()
     return render_to_response('profesor/IngresaCalificacion.html',locals(),context_instance=RequestContext(request))
+
+def profesor_guarda_calificacion(request):
+    calificaciones=request.GET
+    materiaGrupo = request.session["materiaGrupo"]
+    print materiaGrupo
+    alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
+    print "-"*10
+    print alumnos.values()
+    print "-"*10
+    for alumno in calificaciones:
+        p=alumnos.filter(alumno_id=alumno).update(calificacion=calificaciones.get(alumno))
+        print p
+
+    return render_to_response('profesor/registrar-calificaciones.html',locals(),context_instance=RequestContext(request))
 
 def perfiles_profesor(request):
     cvep=request.GET['grup']
@@ -333,6 +348,4 @@ def profesor_tutorias_comentar(request):
     cont =0
     usuario = request.user
     Tutorado=Alumno.objects.filter(tutor_escolar=usuario)
-    nom=Usuario.objects.get(clave=str(usuario))
-    nombre=nom.nombre + " "+ nom.apellidoPaterno + " " + nom.apellidoMaterno
     return render_to_response('profesor/comentar-tutoria.html',locals(),context_instance=RequestContext(request))
