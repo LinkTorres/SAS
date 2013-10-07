@@ -1,0 +1,21 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+	
+<link rel="stylesheet" href="{{MEDIA_URL}}css/perfiles/perfil-profesor.css">
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+<form method="GET" action="/profesor_tutorias_add">
+			<h2>Inserte No de Boleta</h2>
+			
+			<input type="text" name="boleta" style='width:250px'>
+
+			<input type="submit" value="Agregar"/>
+			</form>
+{% endblock %}

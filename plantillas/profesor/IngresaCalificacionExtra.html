@@ -1,0 +1,51 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+
+	<style>
+	.success {
+		background-color:
+	 #090;
+	}
+	.error {
+		background-color:#900;
+	}
+	</style>
+  
+{% endblock %}
+
+{% block archivos_js  %}
+
+	
+{% endblock %}
+
+{%  block contenido %}
+
+
+				<h1>Calificaciones</h1></br>
+					<h3>Ingrese Calificaciones.</h3></br>
+				<center>
+				<h4>Grupo : {{materiaGrupo.grupo}}</h4>
+		<form method="get" action="/profesor_guarda_calificacionExtra">
+			<table class="table">
+				<tr>
+					<td>Nombre del Alumno</td>
+					<td>Calificación</td>
+				</tr>
+				<tr>
+
+				{% for alumno in alumnos %}
+					<tr>
+					<td>{{alumno.alumno.cve_usuario.nombre}} {{alumno.alumno.cve_usuario.apellidoPaterno}} {{alumno.alumno.cve_usuario.apellidoMaterno}}</td>
+					<td><input type="number" name={{alumno.alumno_id}} id={{alumno.alumno_id}} value={{alumno.calificacionExtra}}></td>
+				</tr>
+				{% endfor %}
+			</table>
+			<input class="btn guardar" type="submit" value="Guardar"/>
+
+			<input class="btn cancelar" type="button" value="Cancelar"/>
+		</form>
+			</center>
+		
+{% endblock %}
+

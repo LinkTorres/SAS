@@ -19,21 +19,22 @@
 				<th>Comentario</th>
 				<th></th>
 			</tr>
+			<form method="GET" action="/guardar_comentarios">
 			{%for alumno in Tutorado %}
 
 			<tr>
-				<td>{{alumno}}</td>
-				<td class='nombre-alumno'>{{alumno.cve_usuario.nombre}} {{alumno.cve_usuario.apellidoPaterno}} {{alumno.cve_usuario.apellidoMaterno}}</td>
-				<td class="exito"><textarea id='comentario1' rows="4" cols="50">Ingrese un comentario sobre ALUMNO A...</textarea></td>
+				<td>{{alumno.alumno.cve_usuario}}</td>
+				<td class='nombre-alumno'>{{alumno.alumno.cve_usuario.nombre}} {{alumno.alumno.cve_usuario.apellidoPaterno}} {{alumno.alumno.cve_usuario.apellidoMaterno}}</td>
+				<td class="exito"><textarea id={{alumno.alumno_id}} rows="4" cols="50" name={{alumno.alumno_id}}>{{alumno.comentario}}</textarea></td>
 				<td>--</td>
 				</tr>
 			{% endfor %}
-			
 			</table>
 			<div id='botones' class='center'>
 			<br>
 				<button class="btn" onclick="document.getElementById('comentario2').disabled = false">Editar Seleccionado</button>
-				<button  class="2 btn">Guardar Comentarios</button>
+				<input type="submit" value="Guardar Comentarios">
+			</form>
 			</div>
 
 {% endblock %}

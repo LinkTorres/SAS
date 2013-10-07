@@ -308,7 +308,7 @@ def profesor_guarda_calificacionETS(request):
     return render_to_response('profesor/registrar-calificacionesETS.html',locals(),context_instance=RequestContext(request))
 
 def perfiles_profesor(request):
-    cvep=request.GET['prof']
+    cvep=request.GET['grup']
     profesor=Profesor.objects.get(cve_usuario__clave=cvep)
     nombre=profesor.cve_usuario.nombre + " " + profesor.cve_usuario.apellidoPaterno + " " + profesor.cve_usuario.apellidoMaterno
     rol=profesor.rol_academico
@@ -424,18 +424,17 @@ def profesor_tutorias_comentar(request):
 def guardar_comentarios(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    cont =0
     usuario = request.user
-    Tutorado=ComentarioTutorado.objects.filter(profesor=usuario)
+    tutorado=ComentarioTutorado.objects.filter(profesor=usuario)
     comentarios=request.GET
     for alumno in comentarios:
-        p=Tutorado.filter(alumno_id=alumno).update(comentario=comentarios.get(alumno))
+        p=tutorado.filter(alumno_id=alumno).update(comentario=comentarios.get(alumno))
     return render_to_response('profesor/comentar-tutoria.html',locals(),context_instance=RequestContext(request))
 
 def profesor_agregar_tutorado(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    return render_to_response('profesor/agregar-tutorado.html',locals(),context_instance=RequestContext(request))
+    return render_to_response('/profesor_agregar_tutorado',locals(),context_instance=RequestContext(request))
 
 def profesor_tutorias_add(request):
     profesor=request.user

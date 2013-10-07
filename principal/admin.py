@@ -55,5 +55,6 @@ admin.site.register(MateriaImpartidaEnLab)
 admin.site.register(AlumnoTomaEts)
 admin.site.register(Horario)
 admin.site.register(MateriaImpartidaEnGrupo)
+admin.site.register(ComentarioTutorado)
 
 admin.site.register(AlumnoTomaClaseEnGrupo)

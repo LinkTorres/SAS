@@ -20,7 +20,7 @@ dias=(('lunes', 'lunes'),('martes', 'martes'),('miercoles', 'miércoles'),('juev
 seguros_Medico=(('IMSS','IMSS'),('ISSTE','ISSTE'))
 tipos_alumnos=(('Historico','Histórico'),('Nuevo_Ingreso','Nuevo Ingreso'),('Regular','Regular'),('Irregular','Irregular'))
 status_empleados=(('Activo', 'Activo'),('Sabatico', 'Sabático'),('Incapacidad','Incapacidad'))
-roles_academicos=(('Coordinador', 'Coordinador'),('JefeAsignatura', 'JefeAsignatura'))
+roles_academicos=(('Coordinador', 'Coordinador'),('JefeAsignatura', 'JefeAsignatura'),('Normal','Normal'))
 tipo_profesores=(('Base', 'Base'),('Interino', 'Interino'))
 turno =(('Matutino','Matutino'),('Vespertino','Vespertino'))
 
@@ -269,12 +269,23 @@ class AlumnoTomaEts(models.Model):
 
 
 
-
+#***********************************************************************************************************
+class ComentarioTutorado(models.Model):
+    profesor = models.ForeignKey(Profesor)
+    alumno = models.ForeignKey(Alumno)
+    comentario=models.CharField(max_length=150)
+    fecha=models.DateField(default=date.today,blank=True,null=True)
+    class Meta:
+        unique_together = (("profesor","alumno"),)
+        ordering = ('alumno',)
+    def __str__(self):
+        return '%s %s' % (self.alumno,self.comentario)
 #***********************************************************************************************************
 class AlumnoTomaClaseEnGrupo(models.Model):
     alumno = models.ForeignKey(Alumno)
     materia_grupo = models.ForeignKey(MateriaImpartidaEnGrupo)
     calificacion=models.IntegerField(null=True, blank=True)
+    calificacionExtra=models.IntegerField(null=True, blank=True)
     class Meta:
         unique_together = (("alumno", "materia_grupo"),)
         ordering = ('alumno',)

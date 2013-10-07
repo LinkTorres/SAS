@@ -19,13 +19,13 @@
 			<form method="GET" action="/perfiles_profesor">
 			<h2>Buscar Profesores</h2>
 			
-			<input list='profes' id ="group" name="grup" style='width:250px'>
+			<input list='profes' id ="prof" name="prof" style='width:250px'>
 			<datalist id='profes'>
 			{%for prof in profesoresList %}
 				<option>{{prof}}</option>
 			{% endfor %}
 			</datalist>
-			<input type="submit" value="Buscar ..."/>
+			<input type="submit" value="Buscar"/>
 			</form>
 			
 			<br>
@@ -39,7 +39,7 @@
 				<option>{{materia}}</option>
 			{% endfor %}
 			</datalist>
-			<button class="btn" onclick="location.href = '/perfiles_materia'">Buscar ...</button>
+			<button class="btn" onclick="location.href = '/perfiles_materia'">Buscar</button>
 			
 			<br>
 			<br>
@@ -53,7 +53,7 @@
 				<option>{{grupo}}</option>
 			{% endfor %}
 			</datalist>
-			<input type="submit" value="Buscar ..."/>
+			<input type="submit" value="Buscar"/>
 			</form>
 			</center>
 
