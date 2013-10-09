@@ -62,7 +62,7 @@
 
                 <tr>
                       <td>Correo personal:</td>
-                      <td><input type="email" name="email" id="personal"  size="30" value="{{profesor2.cve_usuario.email_personal}}"></td>
+                      <td><input type="email" name="email" id="personal"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" size="30" value="{{profesor2.cve_usuario.email_personal}}"></td>
                       <!---<td align="center"><input name="imagen" type="file" /></td-->
                 </tr>
 
@@ -73,7 +73,7 @@
 
                 <tr>
                       <td>Telefono:</td>
-                      <td><input type="tel" name="telefono" id="extension" size="12" value="{{profesor2.cve_usuario.Telefono_Casa}}"</td>
+                      <td><input type="tel" pattern="(\+?\d[- .]*){8,13}" name="telefono" id="extension" size="12" value="{{profesor2.cve_usuario.Telefono_Casa}}"</td>
                 </tr>
 
                 <tr>
@@ -81,11 +81,11 @@
                 </tr>
                 <tr>
                       <td>De:</td>
-                      <td><input type="time" name="entrada" id="hasesorias" size="40" value="{{profesor2.hora_entrada}}"</td>
+                      <td><input type="time" name="entrada" min="07:00" max="21:30" id="hasesorias" size="40" value="{{profesor2.hora_entrada}}"</td>
                 </tr>
                 <tr>
                       <td>A:</td>
-                      <td><input type="time" name="salida" id="hasesorias" size="40" value="{{profesor2.hora_salida}}"</td>
+                      <td><input type="time" name="salida" min="07:00" max="21:30" id="hasesorias" size="40" value="{{profesor2.hora_salida}}"</td>
                 </tr>
                 <tr>
                       <td colspan="2" align="center"><input class="btn" type="submit" value="Guardar"/></td>

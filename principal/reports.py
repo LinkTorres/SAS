@@ -3,7 +3,7 @@ import os
 RUTA_PROYECTO = os.path.dirname(os.path.abspath(__file__))
 from geraldo import Report, landscape, ReportBand, ObjectValue, SystemField,\
             BAND_WIDTH, Label,Image,Line
-from reportlab.lib.pagesizes import A5
+from reportlab.lib.pagesizes import A5,A4,letter
 from reportlab.lib.units import cm
 from reportlab.lib.enums import TA_RIGHT, TA_CENTER, TA_LEFT
 from reportlab.lib.colors import navy, yellow, red, purple, orange,\
@@ -14,7 +14,7 @@ class lista_alumnos(Report):
     title = 'Instituto Politécnico Nacional'
 
     #materia_grupo.profesor.cve_usuario
-    page_size = landscape(A5)
+    page_size = landscape(letter)
     margin_left = 2*cm
     margin_top = 0.5*cm
     margin_right = 0.5*cm
@@ -25,17 +25,17 @@ class lista_alumnos(Report):
         bandera=True
 
         elements=(
-            ObjectValue(attribute_name='alumno.cve_usuario',top=1.5*cm, left=0.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
+            ObjectValue(attribute_name='alumno.cve_usuario',top=3*cm, left=0.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
             
             ObjectValue(attribute_name='alumno.cve_usuario.get_full_name'
-                , top=1.5*cm,left=3*cm ,style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
+                , top=3*cm,left=3*cm ,style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
             
                 #ObjectValue(attribute_name='materia_grupo.profesor.cve_usuario.get_full_name_prof'
                 #, top=0*cm,left=0,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
                 
 
             Label(text="|_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_ |_",
-                top=1.5*cm, left=8*cm,width=BAND_WIDTH,
+                top=3*cm, left=8*cm,width=BAND_WIDTH,
              style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
             
         )
@@ -51,9 +51,9 @@ class lista_alumnos(Report):
                     Label(text="Escuela Superior de Cómputo", top=0.8*cm, left=0,width=BAND_WIDTH,
                         style={'fontName': 'Helvetica-Bold', 'fontSize': 10, 'alignment': TA_CENTER}),
 
-                    Label(text="Nombre", top=2.3*cm, left=3*cm, width=1.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8 ,'borderWidth': 1, 'borderColor': navy,
+                    Label(text="Nombre", top=4.5*cm, left=3*cm, width=1.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8 ,'borderWidth': 1, 'borderColor': navy,
                     'borderPadding': 1, 'borderRadius': 2}),
-                    Label(text="Boleta", top=2.3*cm, left=0.5*cm,width=1.5*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8,'borderWidth': 1, 'borderColor': navy,
+                    Label(text="Boleta", top=4.5*cm, left=0.5*cm,width=1.5*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8,'borderWidth': 1, 'borderColor': navy,
                     'borderPadding': 1, 'borderRadius': 2}),
                     SystemField(expression=u'Pagina %(page_number)d de %(page_count)d', top=0.1*cm,
                         width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
@@ -72,17 +72,21 @@ class lista_alumnos(Report):
     class band_begin(ReportBand):
         height = 1*cm
         elements = [
-            Label(text='Lista de Alumnos', top=0.1*cm,
-                left=8*cm),
+            Label(text='Lista de Alumnos', top=0.1*cm,width=BAND_WIDTH,
+                style={'fontName': 'Helvetica-Bold', 'fontSize': 10, 'alignment': TA_CENTER} ),
         ]
 
     class band_summary(ReportBand):
          elements = [
-            #ObjectValue(attribute_name='materia_grupo.profesor.cve_usuario.get_full_name_prof'
-            #  , top= 0*cm,left=0,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
+            ObjectValue(attribute_name='materia_grupo.profesor.cve_usuario.get_full_name_prof'
+              , top= 0*cm,left=0,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
+            ObjectValue(attribute_name='materia_grupo.materia.get_full_name_mate'
+              , top= 0.4*cm,left=0*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
+            ObjectValue(attribute_name='materia_grupo.grupo.get_full_name_gpo'
+              , top= 0.8*cm,left=0*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
             ]
 
-
+#*********************************************************************************************************
 class lista_evaluaciones(Report):
     title = 'Instituto Politécnico Nacional'
 
@@ -99,12 +103,12 @@ class lista_evaluaciones(Report):
         bandera=True
 
         elements=(
-            ObjectValue(attribute_name='alumno.cve_usuario',top=1.5*cm, left=0.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
+            ObjectValue(attribute_name='alumno.cve_usuario',top=3*cm, left=0.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
             
             ObjectValue(attribute_name='alumno.cve_usuario.get_full_name'
-                , top=1.5*cm,left=3*cm ,style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
+                , top=3*cm,left=3*cm ,style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
             ObjectValue(attribute_name='calificacion'
-                , top=1.5*cm,left=8*cm ,style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
+                , top=3*cm,left=8*cm ,style={'fontName': 'Helvetica-Bold', 'fontSize':8}),
             
                 #ObjectValue(attribute_name='materia_grupo.profesor.cve_usuario.get_full_name_prof'
                 #, top=0*cm,left=0,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
@@ -122,11 +126,11 @@ class lista_evaluaciones(Report):
                     Label(text="Escuela Superior de Cómputo", top=0.8*cm, left=0,width=BAND_WIDTH,
                         style={'fontName': 'Helvetica-Bold', 'fontSize': 10, 'alignment': TA_CENTER}),
 
-                    Label(text="Nombre", top=2.3*cm, left=3*cm, width=1.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8 ,'borderWidth': 1, 'borderColor': navy,
+                    Label(text="Nombre", top=4.5*cm, left=3*cm, width=1.5*cm, style={'fontName': 'Helvetica-Bold', 'fontSize':8 ,'borderWidth': 1, 'borderColor': navy,
                     'borderPadding': 1, 'borderRadius': 2}),
-                    Label(text="Boleta", top=2.3*cm, left=0.5*cm,width=1.5*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8,'borderWidth': 1, 'borderColor': navy,
+                    Label(text="Boleta", top=4.5*cm, left=0.5*cm,width=1.5*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8,'borderWidth': 1, 'borderColor': navy,
                     'borderPadding': 1, 'borderRadius': 2}),
-                    Label(text="Calificación", top=2.3*cm, left=8*cm,width=1.5*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8,'borderWidth': 1, 'borderColor': navy,
+                    Label(text="Calificación", top=4.5*cm, left=8*cm,width=1.5*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8,'borderWidth': 1, 'borderColor': navy,
                     'borderPadding': 1, 'borderRadius': 2}),
                     SystemField(expression=u'Pagina %(page_number)d de %(page_count)d', top=0.1*cm,
                         width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
@@ -151,6 +155,10 @@ class lista_evaluaciones(Report):
 
     class band_summary(ReportBand):
          elements = [
-            #ObjectValue(attribute_name='materia_grupo.profesor.cve_usuario.get_full_name_prof'
-            #  , top= 0*cm,left=0,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
+            ObjectValue(attribute_name='materia_grupo.profesor.cve_usuario.get_full_name_prof'
+              , top= 0*cm,left=0,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
+            ObjectValue(attribute_name='materia_grupo.materia.get_full_name_mate'
+              , top= 0.4*cm,left=0*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
+            ObjectValue(attribute_name='materia_grupo.grupo.get_full_name_gpo'
+              , top= 0.8*cm,left=0*cm,style={'fontName': 'Helvetica-Bold', 'fontSize':8, 'alignment': TA_LEFT}),
             ]

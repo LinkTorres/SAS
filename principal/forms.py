@@ -58,6 +58,7 @@ class UsuarioForm(ModelForm):
          model = Usuario
          
 
-
+class recuperar_pass(forms.Form):
+    clave_usuario= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Clave de usuario', 'type':'text', 'autofocus':'True'}), required=True)
 
 

@@ -130,6 +130,8 @@ class Grupo(models.Model):
     turno = models.CharField(max_length=30, choices=turno)
     def __unicode__(self):
         return self.cve_grupo
+    def get_full_name_gpo(self):
+        return 'Grupo : '+self.cve_grupo
 
 class Depto(models.Model):
     nombre_depto = models.CharField(max_length=30,unique=True, db_index=True)
@@ -161,6 +163,9 @@ class Materia(models.Model):
     materia_siguiente = models.ForeignKey('self', null=True, blank=True, related_name='materia_materia_siguiente')
     def __unicode__(self):
         return '%s %s' % (self.cve_materia,self.nombre)
+
+    def get_full_name_mate(self):
+        return 'Materia : '+self.nombre
 
 
 class Profesor(models.Model):

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404, HttpResponse
-from django.shortcuts import render_to_response,get_object_or_404,redirect
+from django.shortcuts import render_to_response,get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, authenticate, logout
 from django.template import RequestContext
@@ -22,6 +22,9 @@ from django.http import HttpResponse
 from reports import lista_alumnos,lista_evaluaciones
 from geraldo.generators import PDFGenerator
 
+from django.shortcuts import redirect
+
+from django.core.mail import EmailMessage
 
 
 def inicio(request):
@@ -608,28 +611,67 @@ def profesor_tutorias_add(request):
 
 
 def reporte_lista(request):
-    profesor=request.user
-    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    materia=request.GET['materia']
-    materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
-    request.session["materiaGrupo"] = materiaGrupo
-    alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
-    resp = HttpResponse(mimetype='application/pdf')
-    report = lista_alumnos(queryset=alumnos)
-    report.generate_by(PDFGenerator, filename=resp)
-    return resp
+    try:
+        profesor=request.user
+        atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+        materia=request.GET['materia']
+        materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+        request.session["materiaGrupo"] = materiaGrupo
+        alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
+        resp = HttpResponse(mimetype='application/pdf')
+        report = lista_alumnos(queryset=alumnos)
+        report.generate_by(PDFGenerator, filename=resp)
+        return resp
+    except:
+            mensaje=1
+            return redirect('/profesor_reportes_PRUI08_1')
 
 
 def reporte_evaluaciones(request):
-    profesor=request.user
-    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    materia=request.GET['materia']
-    materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
-    request.session["materiaGrupo"] = materiaGrupo
-    alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
+    try:
+        profesor=request.user
+        atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+        materia=request.GET['materia']
+        materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+        request.session["materiaGrupo"] = materiaGrupo
+        alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
 
-    resp = HttpResponse(mimetype='application/pdf')
-    report = lista_evaluaciones(queryset=alumnos)
-    report.generate_by(PDFGenerator, filename=resp)
-    return resp
+        resp = HttpResponse(mimetype='application/pdf')
+        report = lista_evaluaciones(queryset=alumnos)
+        report.generate_by(PDFGenerator, filename=resp)
+        return resp
+    except:
+            mensaje=1
+            return redirect('/profesor_reportes_PRUI08_2')
 
+
+
+def recuperar_contrasena(request):
+    if request.method=='POST':
+        formulario = recuperar_pass(request.POST)
+        try:    
+            if formulario.is_valid():
+                titulo = 'Recuperar contraseña SAES'
+                clave_usuario = formulario.cleaned_data['clave_usuario']
+                try:
+                    usuario=Usuario.objects.get(clave=clave_usuario)
+                except:
+                    mensaje=1 #Mensaje de usuario no encontrado
+                    return HttpResponseRedirect('/')
+                email=usuario.email_institucional
+                contrasena_temporal=usuario.clave
+                usuario.set_password(contrasena_temporal)
+                usuario.save()
+                contenido = formulario.cleaned_data['clave_usuario']+' Su contrasena temporal es:' + contrasena_temporal
+                print "************1"
+                correo = EmailMessage(titulo, contenido, to=[email])
+                print "************2"
+                correo.send()   
+                print "************3"
+                return HttpResponseRedirect('/')
+        except:
+                return HttpResponseRedirect('/')
+                mensaje=2 #Mensaje de error de conexion
+    else:
+        formulario = recuperar_pass()
+        return render_to_response('recuperar_pass.html',{'formulario':formulario}, context_instance=RequestContext(request))

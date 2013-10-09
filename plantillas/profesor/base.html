@@ -22,34 +22,6 @@
 
 {% block archivos_css %}{% endblock %}
 
-<script type="text/javascript">
-	$(".dropdown-toggle").dropdown-toggle
-</script>
-
-<script type="text/javascript"> 
-	// agregar a mensajes.js (gestión de mensajes)
-	$(document).ready(function()
-	{
-					$('.guardar').click(function()
-		{
-			jQuery.noticeAdd({
-				text: 'Calificaciones guardadas correctamente',
-				stay: false,
-				type: 'success'
-			});
-		});
-		$('.cancelar').click(function()
-		{
-			jQuery.noticeAdd({
-				text: 'Usted ha cancelado la operacion',
-				stay: false,
-				type: 'error'
-			});
-		});
-		
-	});
-</script>
-
 
 	<title>SAESCOM</title>
 

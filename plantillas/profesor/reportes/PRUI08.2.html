@@ -2,7 +2,6 @@
 
 {% block archivos_css  %}
 
-<link rel="stylesheet" href="{{STATIC_URL}}css/profesor/reportes/reportes.css">
 	
 {% endblock %}
 
@@ -29,23 +28,10 @@
 
 					<input type="submit" value="Aceptar"/>
 					<br>
-					{% if mensaje == 1 %}
-						<script>
-						bootbox.alert('Se genero correctamente el reporte')
-						
-						</script>
-
-					{% elif mensaje == 2 %}
-						<script>
-						bootbox.alert('Hubo en error al generar el reporte')
-						</script>
-					{% endif %}
-				
 
 			</Form>
 		</center>
-		<button class="btn" style="float: left; margin-left: 60px;" onclick="bootbox.alert('Usted ha cancelado la operacion',function() {
-  location.href='/profesor_main'});">		Regresar
+		<button class="btn" style="float: left; margin-left: 60px;" onclick="location.href='/profesor_main'">		Regresar
 		</button>
 
 

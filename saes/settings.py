@@ -160,6 +160,14 @@ LOGGING = {
 }
 
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'saes.escom@gmail.com'
+EMAIL_HOST_PASSWORD = 'saesescom'
+EMAIL_PORT = 587
+#DEFAULT_FROM_EMAIL = 'your email'
+
+
 
 
 
