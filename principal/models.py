@@ -64,7 +64,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'clave'
 
     def get_full_name(self):
-        return self.clave + ' ' + self.nombre
+        return self.apellidoPaterno + ' ' + self.apellidoMaterno + ' ' +self.nombre
+
+    def get_full_name_prof(self):
+        return 'Profesor : '+self.apellidoPaterno + ' ' + self.apellidoMaterno + ' ' +self.nombre
 
     def get_short_name(self):
         return self.nombre
@@ -174,6 +177,7 @@ class Profesor(models.Model):
     carrera = models.CharField(max_length=40)
     salario = models.FloatField(null=True,blank=True)
     lab_a_mi_cargo = models.ForeignKey(Laboratorio, null=True,blank=True)
+    comentario=models.CharField(max_length=400)
 
     def __unicode__(self):
         return str(self.cve_usuario)

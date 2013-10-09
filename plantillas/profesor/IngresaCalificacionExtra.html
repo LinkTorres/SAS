@@ -22,10 +22,10 @@
 {%  block contenido %}
 
 
-				<h1>Calificaciones</h1></br>
+				<h1>Calificaciones de grupo extraordinarias</h1></br>
 					<h3>Ingrese Calificaciones.</h3></br>
 				<center>
-				<h4>Grupo : {{materiaGrupo.grupo}}</h4>
+				<h4>Materia : {{materiaGrupo.materia.nombre}}</h4> <h4> Grupo : {{materiaGrupo.grupo}}</h4>
 		<form method="get" action="/profesor_guarda_calificacionExtra">
 			<table class="table">
 				<tr>
@@ -33,17 +33,28 @@
 					<td>Calificación</td>
 				</tr>
 				<tr>
+				{% if mensaje == 1 %}
+					<script>
+					bootbox.alert('Calificaciones guardadas correctamente')
+					
+					</script>
 
+				{% elif mensaje == 2 %}
+					<script>
+					bootbox.alert('Hubo en error en la conexion con la base')
+					</script>
+				{% endif %}
 				{% for alumno in alumnos %}
 					<tr>
-					<td>{{alumno.alumno.cve_usuario.nombre}} {{alumno.alumno.cve_usuario.apellidoPaterno}} {{alumno.alumno.cve_usuario.apellidoMaterno}}</td>
-					<td><input type="number" name={{alumno.alumno_id}} id={{alumno.alumno_id}} value={{alumno.calificacionExtra}}></td>
+					<td>{{alumno.alumno.cve_usuario.apellidoPaterno}} {{alumno.alumno.cve_usuario.apellidoMaterno}} {{alumno.alumno.cve_usuario.nombre}} </td>
+					<td><input type="number" min='0' max='10' name={{alumno.alumno_id}} id={{alumno.alumno_id}} value={{alumno.calificacionExtra}}></td>
 				</tr>
 				{% endfor %}
 			</table>
 			<input class="btn guardar" type="submit" value="Guardar"/>
 
-			<input class="btn cancelar" type="button" value="Cancelar"/>
+			<input class="btn cancelar" type="button" value="Cancelar" onclick="bootbox.alert('Usted ha cancelado la operacion',function() {
+  window.location = '/profesor_main'});"/>
 		</form>
 			</center>
 		

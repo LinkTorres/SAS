@@ -1,0 +1,97 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+  
+<link rel="stylesheet" href="{{MEDIA_URL}}css/perfiles/perfil-profesor.css">
+{% endblock %}
+
+{%  block contenido %}
+            <form method="GET" action="/guarda_miperfil">
+            <table>
+              {% if mensaje == 1 %}
+                <script>
+                bootbox.alert('Se han guardado correctamente los cambios',function() {window.location = '/profesor_miperfil'})
+                
+                </script>
+
+              {% elif mensaje == 2 %}
+                <script>
+                bootbox.alert('Hubo en error en la conexion con la base')
+                </script>
+              {% endif %}
+             
+
+                <tr>
+                    <td colspan="2"><h1>Informaci&oacute;n Personal</h1></td>
+                </tr>
+                <tr>
+                        <td>Nombre:</td>
+                        <td> <label>{{profesor2.cve_usuario.nombre}} {{profesor2.cve_usuario.apellidoPaterno}} {{profesor2.cve_usuario.apellidoMaterno}}</label></td>
+                        <td rowspan="7" align="center"><img id='img-profesor' src={{MEDIA_URL}}{{profesor2.cve_usuario.foto}} width=160 height=160></td>
+                </tr>
+
+                <tr>
+                        <td>Curp:</td>
+                        <td> <label>{{profesor2.cve_usuario.curp}}</label></td>
+                </tr>
+
+                <tr>
+                        <td>Grado academico:</td>
+                        <td><label>{{profesor2.grado_estudios}}</label></td>
+                </tr>
+
+                <tr>
+                        <td>Salario:</td>
+                        <td> <label>{{profesor2.salario}}</label></td>
+                </tr>
+
+                <tr>
+                       <td>Grupos:</td>
+                       <td> <label>{%for grupo in grupos%}{{grupo.grupo}} {%endfor%}</label></td>
+                </tr>
+
+                <tr>
+                       <td>Materias:</td>
+                       <td><label>| {%for materia in grupos%}{{materia.materia.nombre}}| {%endfor%}</label></td>
+                </tr>
+
+                <tr>
+                      <td>Correo institucional:</td>
+                      <td><label>{{profesor2.cve_usuario.email_institucional}}</label></td>
+                </tr>
+
+                <tr>
+                      <td>Correo personal:</td>
+                      <td><input type="email" name="email" id="personal"  size="30" value="{{profesor2.cve_usuario.email_personal}}"></td>
+                      <!---<td align="center"><input name="imagen" type="file" /></td-->
+                </tr>
+
+               <!-- <tr>
+                      <td>Ubicacion:</td>
+                      <td><input type="text" id="ubicacion" size:"30"</td>
+                </tr>-->
+
+                <tr>
+                      <td>Telefono:</td>
+                      <td><input type="tel" name="telefono" id="extension" size="12" value="{{profesor2.cve_usuario.Telefono_Casa}}"</td>
+                </tr>
+
+                <tr>
+                      <td colspan=2>   Horario de asesorias:</td>
+                </tr>
+                <tr>
+                      <td>De:</td>
+                      <td><input type="time" name="entrada" id="hasesorias" size="40" value="{{profesor2.hora_entrada}}"</td>
+                </tr>
+                <tr>
+                      <td>A:</td>
+                      <td><input type="time" name="salida" id="hasesorias" size="40" value="{{profesor2.hora_salida}}"</td>
+                </tr>
+                <tr>
+                      <td colspan="2" align="center"><input class="btn" type="submit" value="Guardar"/></td>
+                </tr>
+             
+         </table>
+         </form>
+                    <br>
+			{% endblock %}

@@ -13,5 +13,43 @@
 
 {%  block contenido %}
 
+<div id='materia-top'>
+			<table id='tabla-info-materia'>
+				<tr>
+					<td class='info-materia '>
+						<h2 id='materia-nombre'>{{nombre}}</h2>
+						<h3 id='materia-clasificacion'>{{clasificacion}}</h3>
+						<br>
+						<p id='materia-creditos'><b>Créditos: </b>{{creditos}}</p>
+						<p id='materia-nivel'><b>Nivel: </b>{{nivel}}</p>
+						<p id='materia-coordinador'><b>Coordinador de Materia: </b>{{coordinador}}</p>
+						<p id='materia-departamento'><b>Departamento: </b>{{departamento}}</p>
+					</td>
+				</tr>
+			</table>
+			</div>
+			<h2>Profesores que la Imparten</h2>
+				<br>
+					<table id='tabla-profesor-materias'>
+						<tr>
+							<th>Grupo</th>
+							<th>Ubicación</th>
+							<th class='nombre-profesor'>Nombre del profesor</th>
+						</tr>
+						{%for elemento in materias %}
+							<tr>
+								<td>{{elemento.grupo}}</td>
+								<td>{{elemento.grupo.cve_salon}}</td>
+								<td>{{elemento.profesor.cve_usuario.apellidoPaterno}} {{elemento.profesor.cve_usuario.apellidoMaterno}} {{elemento.profesor.cve_usuario.nombre}}</td>
+							</tr>
+						{% endfor %}
+						
+					</table>
+<br>
+<br>
+	
+<a href="http://148.204.58.221/DISC/temarios/" target="_blank"><input type="submit" name="button" value="TEMARIO" class="btn"/><a/> 
+				</div>
+
 
 {% endblock %}

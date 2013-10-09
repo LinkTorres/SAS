@@ -16,36 +16,54 @@
 
 {% block archivos_js  %}
 
+
 	
 {% endblock %}
 
 {%  block contenido %}
 
 
-				<h1>Calificaciones</h1></br>
+				<h1>Calificaciones de grupo ordinarias</h1></br>
 					<h3>Ingrese Calificaciones.</h3></br>
 				<center>
-				<h4>Grupo : {{materiaGrupo.grupo}}</h4>
-		<form method="get" action="/profesor_guarda_calificacion">
-			<table class="table">
+				<h4>Materia : {{materiaGrupo.materia.nombre}}</h4> <h4> Grupo : {{materiaGrupo.grupo}}</h4>
+		<form id="form" method="get" action="/profesor_guarda_calificacion">
+			<table class="table table-striped">
 				<tr>
 					<td>Nombre del Alumno</td>
 					<td>Calificación</td>
 				</tr>
 				<tr>
 
+				{% if mensaje == 1 %}
+					<script>
+					bootbox.alert('Calificaciones guardadas correctamente')
+					
+					</script>
+
+				{% elif mensaje == 2 %}
+					<script>
+					bootbox.alert('Se produjo un error en la conexion con la base')
+					</script>
+				{% endif %}
 				{% for alumno in alumnos %}
 					<tr>
-					<td>{{alumno.alumno.cve_usuario.nombre}} {{alumno.alumno.cve_usuario.apellidoPaterno}} {{alumno.alumno.cve_usuario.apellidoMaterno}}</td>
-					<td><input type="number" name={{alumno.alumno_id}} id={{alumno.alumno_id}} value={{alumno.calificacion}}></td>
+					<td>{{alumno.alumno.cve_usuario.apellidoPaterno}} {{alumno.alumno.cve_usuario.apellidoMaterno}} {{alumno.alumno.cve_usuario.nombre}} </td>
+					<td><input min="0" max="10" type="number" name={{alumno.alumno_id}} id={{alumno.alumno_id}} value={{alumno.calificacion}}></td>
 				</tr>
 				{% endfor %}
-			</table>
-			<input class="btn guardar" type="submit" value="Guardar"/>
 
-			<input class="btn cancelar" type="button" value="Cancelar"/>
+			</table>
+			
+			<input class="btn" type="submit" value="Guardar"/>
+
+			<input class="btn cancelar" type="button" value="Cancelar" onclick="bootbox.alert('Usted ha cancelado la operacion',function() {
+  window.location = '/profesor_main'});"/>
+			
 		</form>
 			</center>
-		
+
+
+
 {% endblock %}
 

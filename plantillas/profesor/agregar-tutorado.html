@@ -13,9 +13,29 @@
 {%  block contenido %}
 <form method="GET" action="/profesor_tutorias_add">
 			<h2>Inserte No de Boleta</h2>
-			
+				{% if mensaje == 2 %}
+					<script>
+					bootbox.alert('La boleta es incorrecta, o el alumno no existe')
+					</script>
+				{% elif mensaje == 5 %}
+					<script>
+					bootbox.alert('Este alumno no puede tener tutor, dado que es historico')
+					</script>
+				{% elif mensaje == 1 %}
+					<script>
+					bootbox.alert('Se ha agregado correctamente al alumno',function() {window.location = '/profesor_tutorias'})
+					</script>
+				{% elif mensaje == 4 %}
+					<script>
+					bootbox.alert('El alumno ya cuenta con un tutor',function() {window.location = '/profesor_tutorias'})
+					</script>
+				{% elif mensaje == 3 %}
+					<script>
+					bootbox.alert('Hubo en error en la conexion con la base')
+					</script>
+				{% endif %}
 			<input type="text" name="boleta" style='width:250px'>
 
-			<input type="submit" value="Agregar"/>
+			<input class="btn" type="submit" value="Agregar"/>
 			</form>
 {% endblock %}

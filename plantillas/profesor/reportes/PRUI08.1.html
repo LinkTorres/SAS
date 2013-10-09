@@ -2,8 +2,8 @@
 
 {% block archivos_css  %}
 
-<link rel="stylesheet" href="{{STATIC_URL}}css/profesor/reportes/reportes.css">
-	
+<link rel="stylesheet" href="{{MEDIA_URL}}css/profesor/reportes/reportes.css">
+
 {% endblock %}
 
 {% block archivos_js  %}
@@ -14,18 +14,43 @@
 {%  block contenido %}
 
 <div id="reportes">
-				Reporte de lista de alumnos
-				<p>
-					Seleccione el grupo: 
-					<select><option >2CV4</option></select>
-					<button class="btn" >Aceptar</button>
-				</p> 
-					<embed src="{{MEDIA_URL}}reporte.pdf" >
+	<h1>Reportes</h1></br>
+					<h2><p style="margin-bottom:5%">Reporte de lista de alumnos</p></h2></br>
+				
+					<center>
+					<Form method="GET" action='/reporte_lista'>
+					Elija el grupo:
+						<select id="materia" name="materia">
+							{%for grupo in grupolist %}
+								<option value={{forloop.counter0}}> {{grupo.materia.nombre}} {{grupo.grupo.cve_grupo}} 
+								</option>
+							{% endfor %}
+						</select>
+
+					<input class="btn" type="submit" value="Aceptar"/>
 					<br>
-				<button class="btn" style="float: left; margin-left: 60px;" onclick="location.href='/profesor_main'">Regresar</button>
-					<br>
+
+					{% if mensaje == 1 %}
+					<script>
+					bootbox.alert('Se genero correctamente el reporte')
 					
-			</div>
+					</script>
+
+					{% elif mensaje == 2 %}
+						<script>
+						bootbox.alert('Hubo en error a generar un reporte')
+						</script>
+					{% endif %}
+				
+
+			</Form>
+		</center>
+		<button class="btn" style="float: left; margin-left: 60px;" onclick="bootbox.alert('Usted ha cancelado la operacion',function() {
+  location.href='/profesor_main'});">		Regresar
+		</button>
+
+
+</div>
 
 
 {% endblock %}

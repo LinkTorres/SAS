@@ -16,6 +16,17 @@
 			<h1 id='titulo'>Directorio</h1>
 			<center>
 			<br>
+				{% if mensaje == 1 %}
+					<script>
+					bootbox.alert('No se encontro el recurso')
+					
+					</script>
+
+				{% elif mensaje == 2 %}
+					<script>
+					bootbox.alert('Hubo en error en la conexion con la base')
+					</script>
+				{% endif %}
 			<form method="GET" action="/perfiles_profesor">
 			<h2>Buscar Profesores</h2>
 			
@@ -25,21 +36,23 @@
 				<option>{{prof}}</option>
 			{% endfor %}
 			</datalist>
-			<input type="submit" value="Buscar"/>
+			<input class="btn" type="submit" value="Buscar"/>
 			</form>
 			
 			<br>
 			<br>
 			<br>
+			<form method="GET" action="/perfiles_materia">
 			<h2>Buscar Materias</h2>
 			
-			<input list='materias' style='width:250px'>
+			<input list='materias' id="mat" name="mat" style='width:250px'>
 			<datalist id='materias'>
 			{%for materia in materiasList %}
-				<option>{{materia}}</option>
+				<option>{{materia.nombre}}</option>
 			{% endfor %}
 			</datalist>
-			<button class="btn" onclick="location.href = '/perfiles_materia'">Buscar</button>
+			<input class="btn" type="submit" value="Buscar"/>
+			</form>
 			
 			<br>
 			<br>
@@ -53,7 +66,7 @@
 				<option>{{grupo}}</option>
 			{% endfor %}
 			</datalist>
-			<input type="submit" value="Buscar"/>
+			<input class="btn" type="submit" value="Buscar"/>
 			</form>
 			</center>
 

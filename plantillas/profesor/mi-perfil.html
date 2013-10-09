@@ -2,76 +2,78 @@
 
 {% block archivos_css  %}
   
+<link rel="stylesheet" href="{{MEDIA_URL}}css/perfiles/perfil-profesor.css">
 {% endblock %}
 
 {%  block contenido %}
-
-  <h1 id='titulo'>Información Personal</h1>
-
-            <table>
-             <form>
-
+			<div id='profesor-top'>
+			<h1>Mi perfil</h1><br>
+			<table id='tabla-info-profesor'>
+				<tr>
+					<td class='info-profesor'>
+						<h2 id='profesor-nombre'>{{profesor2.cve_usuario.nombre}} {{profesor2.cve_usuario.apellidoPaterno}} {{profesor2.cve_usuario.apellidoMaterno}}</h2>
+						<h3 id='profesor-cargos'>{{profesor2.rol_academico}} | {{profesor2.cve_usuario.clasificacion}}</h3>
+						<br>
+						<p id='profesor-mail-institucional'>{{profesor2.cve_usuario.email_institucional}}</p>
+						<p id='profesor-mail-personal'>{{profesor2.cve_usuario.email_personal}}</p>
+						<p id='profesor-cubiculo'>{{profesor2.carrera}}</p>
+						<p id='profesor-telefono'>Tel. Casa {{profesor2.cve_usuario.Telefono_Casa}}|Tel. Celular {{profesor2.cve_usuario.Telefono_Celular}}</p>
+					</td>
+					<td class='perfil-profesor'>
+						<img id='img-profesor' src={{MEDIA_URL}}{{profesor2.cve_usuario.foto}} width=160 height=160>
+					</td>
+				</tr>
+			</table>
+	
+			</div>
+			<div id='profesor-content'>
+				<div id='profesor-left'>
+				<h2>Materias que Imparte</h2>
+				<br>
+					<table id='tabla-materias-profesor'>
+						<tr>
+							<th>Grupo</th>
+							<th>Ubicación</th>
+							<th class='nombre-materia'>Nombre de la materia</th>
+						</tr>
+						{%for materia in materias %}
+							<tr>
+								<td>{{materia.grupo}}</td>
+								<td>{{materia.grupo.cve_salon}}</td>
+								<td>{{materia.materia.nombre}}</td>
+							</tr>
+						{% endfor %}
+						
+					</table>
+					<br>
+					<br>
+					<br>
+					<table  width=550>
                 <tr>
-                        <td>Nombre:</td>
-                        <td> <input type="text" id="nombre" readonly = "readonly" value = "Juan Perez Lopez" size="40"</td>
-                </tr>
 
-                <tr>
-                        <td>RFC:</td>
-                        <td> <input type="text" id="rfc" readonly="readonly" value="CGE060502M6"</td>
+                      <td colspan="1" align="center"><center> <a href="/profesor_miperfil2"><input class="btn" type="button" name="modicar" value="Modificar" ></a></center></td>
                 </tr>
-
-                <tr>
-                        <td>Grado académico:</td>
-                        <td> <input type="text" id="grado" readonly="readonly" value="Doctor" size="10"</td>
-                </tr>
-
-                <tr>
-                        <td>Salario</td>
-                        <td> <input type="text" id="salario" readonly="readonly" value="$ X" size="6"</td>
-                </tr>
-
-                <tr>
-                       <td>Grupos:</td>
-                       <td> <input type="text" id="grupos" readonly = "readonly" value = "3CM1,3CM2,3CM3,3CM4" size="25"</td>
-                </tr>
-
-                <tr>
-                       <td>Materias:</td>
-                       <td><input type="text" id="materias" readonly = "readonly" value = "Ingenieria de Software,etc" size="50"</td>
-                </tr>
-
-                <tr>
-                      <td>Correo institucional:</td>
-                      <td><input type="text" id="institucional" readonly = "readonly" value="jperezl1100@profesor.ipn.mx" size="30"</td>
-                </tr>
-
-                <tr>
-                      <td>Correo personal:</td>
-                      <td><input type="text" id="personal"  size="30"</td>
-                </tr>
-
-                <tr>
-                      <td>Ubicación:</td>
-                      <td><input type="text" id="ubicacion" size:"30"</td>
-                </tr>
-
-                <tr>
-                      <td>Extensión:</td>
-                      <td><input type="text" id="extension" size="12"</td>
-                </tr>
-
-                <tr>
-                      <td>Horario de asesorías</td>
-                      <td><input type="text" id="hasesorias" size="40"</td>
-                </tr>
-             </form>
-         </table>
-                    <br>
+                </table>
+				</div>
+				<div id='profesor-right'>
+					<h2>Más información</h2>
+					<br>
+					<p class='label'>Grado</p>
+					<p id='profesor-grado'>grado_estudios</p>
+					<br>
+					<p class='label'>Tutorías</p>
+					<p id='profesor-grado'>Sí ({{num}} alumnos disponibles)</p>
+					<p id='profesor-grado'>Grupo tutorado {{profesor2.grupo_tutorado}}</p>
+					<br>
+					<p class='label'>Asesorías</p>
+					<p id='profesor-asesoria'>{{profesor2.hora_entrada}} - {{profesor2.hora_salida}}</p>
+					<br>
+					<p class='label'>Salario</p>
+					<p id='profesor-asesoria'>{{profesor2.salario}}</p>
+					<br>
+					<!--<p class='label'>Índice de Reprobación</p>
+					<p id='profesor-promedio'></p>-->
+				</div>
+			</div>
 
 {% endblock %}
-
-
-
-		
-	

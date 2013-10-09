@@ -7,10 +7,11 @@
 <script src="{{MEDIA_URL}}js/script.js"></script>
 <script src="{{MEDIA_URL}}js/bootstrap.js"></script>
 <script src="{{MEDIA_URL}}js/bootstrap-dropdown.js"></script>
-<script src="{{MEDIA_URL}}js/bootstrap-tab.js"></script>
+
 <script src="{{MEDIA_URL}}js/bootbox.min.js"></script>
 <script src="{{MEDIA_URL}}js/horario.js"></script>
-<script src="{{MEDIA_URL}}js/jquery.notice.js" type="text/javascript"></script>
+<script src="{{MEDIA_URL}}js/formularios.js"></script>
+
 {% block archivos_js %}{% endblock %}
 
 <!--Hojas de Estilo-->
@@ -72,8 +73,9 @@
 				<span id="usuario-id">{{profesor.clave}}</span></p>
 				
 				<p>
-					<a href="/profesor_miperfil">Perfil</a>
+					
 					<a href="/profesor_preferencias">Preferencias</a>
+					<a href="/profesor_miperfil">Perfil</a>
 					<a href="/cerrar">Cerrar Sesión</a>
 				</p>
 				</div>
@@ -88,8 +90,6 @@
 
 
 			            <li><a href="/profesor_main">Mi Horario</a></li>
-			            <li class="divider"></li>
-			            <li><a href="/profesor_mis_grupos">Mis Grupos</a></li>
 			            <li class="divider"></li>
 			            <li class="dropdown-submenu">
 			              <a tabindex="-1" href="#">Calificar</a>

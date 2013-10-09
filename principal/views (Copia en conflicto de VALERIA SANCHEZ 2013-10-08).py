@@ -159,11 +159,50 @@ def profesor_main(request):
 def profesor_miperfil(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    profesor2=Profesor.objects.get(cve_usuario=profesor)
     return render_to_response('profesor/mi-perfil.html',locals(),context_instance=RequestContext(request))
+
+def guarda_miperfil(request):
+    profesor=request.user
+    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    profesor2=Profesor.objects.get(cve_usuario=profesor)
+    grupos=MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    bandera=false
+    correo=request.GET['email']
+    telefono=request.GET['telefono']
+    hentrada=request.GET['entrada']
+    hsalida=request.GET['salida']
+    fori=profesor2.cve_usuario.foto
+    if(bandera==true):
+        foto=request.GET['imagen']
+    else:
+        foto=fori
+    usuario=Usuario.objects.filter(clave=profesor).update(email_personal=correo,Telefono_Casa=telefono, foto="fotos/"+foto)
+    p=Profesor.objects.filter(cve_usuario=profesor).update(hora_entrada=hentrada,hora_salida=hsalida)
+
+    return render_to_response('profesor/mi-perfil.html',locals(),context_instance=RequestContext(request))
+
+def profesor_miperfil2(request):
+    profesor=request.user
+    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    profesor2=Profesor.objects.get(cve_usuario=profesor)
+    grupos=MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    return render_to_response('profesor/mi-perfil2.html',locals(),context_instance=RequestContext(request))
+
 
 def profesor_preferencias(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    prof=Profesor.objects.get(cve_usuario=profesor)
+    return render_to_response('profesor/preferencias.html',locals(),context_instance=RequestContext(request))
+
+
+def guardar_preferencias(request):
+    profesor=request.user
+    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    comentario=request.GET['preferencias']
+    p=Profesor.objects.filter(cve_usuario=profesor).update(comentario=comentario)
+    prof=Profesor.objects.get(cve_usuario=profesor)
     return render_to_response('profesor/preferencias.html',locals(),context_instance=RequestContext(request))
 
 def profesor_logout(request):
@@ -232,8 +271,9 @@ def profesor_ingresa_calificacion(request):
     materia=request.GET['materia']
     materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
     request.session["materiaGrupo"] = materiaGrupo
+    request.session["materia"] = materia
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
-    print alumnos.values()
+    #print alumnos.values()
     return render_to_response('profesor/IngresaCalificacion.html',locals(),context_instance=RequestContext(request))
 
 def profesor_ingresa_calificacion_extra(request):
@@ -242,6 +282,7 @@ def profesor_ingresa_calificacion_extra(request):
     materia=request.GET['materia']
     materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
     request.session["materiaGrupo"] = materiaGrupo
+    request.session["materia"] = materia
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
     print alumnos.values()
     return render_to_response('profesor/IngresaCalificacionExtra.html',locals(),context_instance=RequestContext(request))
@@ -252,6 +293,7 @@ def profesor_ingresa_calificacion_ets(request):
     materia=request.GET['materia']
     materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
     request.session["materiaGrupo"] = materiaGrupo
+
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
     print alumnos.values()
     return render_to_response('profesor/IngresaCalificacionETS.html',locals(),context_instance=RequestContext(request))
@@ -262,6 +304,7 @@ def profesor_guarda_calificacion(request):
     grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
     materiaGrupo = request.session["materiaGrupo"]
+    materia = request.session["materia"]
     print materiaGrupo
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
     print "-"*10
@@ -270,8 +313,10 @@ def profesor_guarda_calificacion(request):
     for alumno in calificaciones:
         p=alumnos.filter(alumno_id=alumno).update(calificacion=calificaciones.get(alumno))
         print p
+    mensaje=1
+    return render_to_response('profesor/IngresaCalificacion.html',locals(),context_instance=RequestContext(request))
 
-    return render_to_response('profesor/registrar-calificaciones.html',locals(),context_instance=RequestContext(request))
+
 
 def profesor_guarda_calificacionExtra(request):
     calificaciones=request.GET
@@ -308,23 +353,25 @@ def profesor_guarda_calificacionETS(request):
     return render_to_response('profesor/registrar-calificacionesETS.html',locals(),context_instance=RequestContext(request))
 
 def perfiles_profesor(request):
-    cvep=request.GET['grup']
-    profesor=Profesor.objects.get(cve_usuario__clave=cvep)
-    nombre=profesor.cve_usuario.nombre + " " + profesor.cve_usuario.apellidoPaterno + " " + profesor.cve_usuario.apellidoMaterno
-    rol=profesor.rol_academico
-    clasificacion=profesor.cve_usuario.clasificacion
-    email_i=profesor.cve_usuario.email_institucional
-    email_p=profesor.cve_usuario.email_personal
-    carrera=profesor.carrera
-    telefono_c=profesor.cve_usuario.Telefono_Casa
-    telefono=profesor.cve_usuario.Telefono_Celular
-    grado=profesor.grado_estudios
-    materias=MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
-    tutorados=Alumno.objects.filter(tutor_escolar=profesor)
-    grupo=profesor.grupo_tutorado
-    entrada=profesor.hora_entrada
-    salida=profesor.hora_salida
-    foto=profesor.cve_usuario.foto
+    profesor=request.user
+    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    cvep=request.GET['prof']
+    profesor2=Profesor.objects.get(cve_usuario__clave=cvep)
+    nombre=profesor2.cve_usuario.nombre + " " + profesor2.cve_usuario.apellidoPaterno + " " + profesor2.cve_usuario.apellidoMaterno
+    rol=profesor2.rol_academico
+    clasificacion=profesor2.cve_usuario.clasificacion
+    email_i=profesor2.cve_usuario.email_institucional
+    email_p=profesor2.cve_usuario.email_personal
+    carrera=profesor2.carrera
+    telefono_c=profesor2.cve_usuario.Telefono_Casa
+    telefono=profesor2.cve_usuario.Telefono_Celular
+    grado=profesor2.grado_estudios
+    materias=MateriaImpartidaEnGrupo.objects.filter(profesor=profesor2)
+    tutorados=Alumno.objects.filter(tutor_escolar=profesor2)
+    grupo=profesor2.grupo_tutorado
+    entrada=profesor2.hora_entrada
+    salida=profesor2.hora_salida
+    foto=profesor2.cve_usuario.foto
     num=0
     for alumno in tutorados:
         num+=1
@@ -424,17 +471,18 @@ def profesor_tutorias_comentar(request):
 def guardar_comentarios(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    cont =0
     usuario = request.user
-    tutorado=ComentarioTutorado.objects.filter(profesor=usuario)
+    Tutorado=ComentarioTutorado.objects.filter(profesor=usuario)
     comentarios=request.GET
     for alumno in comentarios:
-        p=tutorado.filter(alumno_id=alumno).update(comentario=comentarios.get(alumno))
+        p=Tutorado.filter(alumno_id=alumno).update(comentario=comentarios.get(alumno))
     return render_to_response('profesor/comentar-tutoria.html',locals(),context_instance=RequestContext(request))
 
 def profesor_agregar_tutorado(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    return render_to_response('/profesor_agregar_tutorado',locals(),context_instance=RequestContext(request))
+    return render_to_response('profesor/agregar-tutorado.html',locals(),context_instance=RequestContext(request))
 
 def profesor_tutorias_add(request):
     profesor=request.user

@@ -1,0 +1,34 @@
+{% extends 'profesor/base.html' %}
+
+{% block archivos_css  %}
+	
+<link rel="stylesheet" href="{{MEDIA_URL}}css/perfiles/perfil-profesor.css">
+{% endblock %}
+
+{% block archivos_js  %}
+	
+{% endblock %}
+
+
+{%  block contenido %}
+<form method="GET" action="/guardar_preferencias">
+			<h1>Preferencias</h1>
+			<h3>Coméntenos sus preferencias:</h3>
+			{% if mensaje == 1 %}
+					<script>
+					bootbox.alert('Se han guardado correctamente los comentarios')
+					
+					</script>
+
+				{% elif mensaje == 2 %}
+					<script>
+					bootbox.alert('Hubo en error en la conexion con la base')
+					</script>
+				{% endif %}
+			
+			<textarea id="preferencias" style="width:730px"rows="7" cols="1000" name="preferencias">{{prof.comentario}}</textarea>
+			<br>
+			<input class="btn" type="submit" value="Guardar"/>
+			
+			</form>
+{% endblock %}

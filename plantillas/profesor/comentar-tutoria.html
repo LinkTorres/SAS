@@ -11,7 +11,17 @@
 {%  block contenido %}
 			
 			<h1 id="titulo">Comentar sobre alumnos tutorados</h1><br>
-			
+			{% if mensaje == 1 %}
+					<script>
+					bootbox.alert('Se han guardado correctamente los comentarios')
+					
+					</script>
+
+				{% elif mensaje == 2 %}
+					<script>
+					bootbox.alert('Hubo en error en la conexion con la base')
+					</script>
+				{% endif %}
 			<table id="tabla-tutorias">
 			<tr>
 				<th>Número de Boleta</th>
@@ -32,8 +42,7 @@
 			</table>
 			<div id='botones' class='center'>
 			<br>
-				<button class="btn" onclick="document.getElementById('comentario2').disabled = false">Editar Seleccionado</button>
-				<input type="submit" value="Guardar Comentarios">
+				<input class="btn" type="submit" value="Guardar Comentarios">
 			</form>
 			</div>
 
