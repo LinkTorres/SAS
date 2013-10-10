@@ -264,20 +264,20 @@ def profesor_mis_grupos(request):
 
 def profesor_registrar_calificaciones(request):
     profesor=request.user
-    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    atributos_profesor = Profesor.objects.get(cve_usuario = profesor)
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
     return render_to_response('profesor/registrar-calificaciones.html',locals(),context_instance=RequestContext(request))
 
 def profesor_registrar_calificaciones_extra(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
     return render_to_response('profesor/registrar-calificacionesExtra.html',locals(),context_instance=RequestContext(request))
 
 def profesor_registrar_calificaciones_ets(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
     return render_to_response('profesor/registrar-calificacionesETS.html',locals(),context_instance=RequestContext(request))
 
 
@@ -294,14 +294,14 @@ def directorio(request):
 def profesor_reportes_PRUI08_1(request):
   
     profesor=request.user
-    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    atributos_profesor = Profesor.objects.get(cve_usuario = profesor)
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
     return render_to_response('profesor/reportes/PRUI08.1.html',locals(),context_instance=RequestContext(request))
 
 def profesor_reportes_PRUI08_2(request):
     profesor=request.user
-    atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
+    atributos_profesor = Profesor.objects.get(cve_usuario = profesor)
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
     return render_to_response('profesor/reportes/PRUI08.2.html',locals(),context_instance=RequestContext(request))
 
 def profesor_calendario(request):
@@ -321,7 +321,8 @@ def profesor_ingresa_calificacion(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
     materia=request.GET['materia']
-    materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+    materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+    materiaGrupo = materiaGrupo.filter(id=materia)[0]
     request.session["materiaGrupo"] = materiaGrupo
     request.session["materia"] = materia
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
@@ -332,11 +333,14 @@ def profesor_ingresa_calificacion_extra(request):
     profesor=request.user
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
     materia=request.GET['materia']
-    materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+    materiaGrupo1 = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+    materiaGrupo = materiaGrupo1.filter(id=materia)
     request.session["materiaGrupo"] = materiaGrupo
     request.session["materia"] = materia
+    print materia
+    print materiaGrupo
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
-    print alumnos.values()
+
     return render_to_response('profesor/IngresaCalificacionExtra.html',locals(),context_instance=RequestContext(request))
 
 def profesor_ingresa_calificacion_ets(request):
@@ -353,8 +357,9 @@ def profesor_ingresa_calificacion_ets(request):
 def profesor_guarda_calificacion(request):
     calificaciones=request.GET
     profesor=request.user
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+    
     materiaGrupo = request.session["materiaGrupo"]
     materia = request.session["materia"]
     print materiaGrupo
@@ -373,8 +378,9 @@ def profesor_guarda_calificacion(request):
 def profesor_guarda_calificacionExtra(request):
     calificaciones=request.GET
     profesor=request.user
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+    
     materiaGrupo = request.session["materiaGrupo"]
     print materiaGrupo
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
@@ -384,14 +390,15 @@ def profesor_guarda_calificacionExtra(request):
     for alumno in calificaciones:
         p=alumnos.filter(alumno_id=alumno).update(calificacionExtra=calificaciones.get(alumno))
         print p
-
-    return render_to_response('profesor/registrar-calificacionesExtra.html',locals(),context_instance=RequestContext(request))
+    mensaje=1
+    return render_to_response('profesor/IngresaCalificacionExtra.html',locals(),context_instance=RequestContext(request))
 
 def profesor_guarda_calificacionETS(request):
     calificaciones=request.GET
     profesor=request.user
-    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)
     atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
+    grupolist = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+    
     materiaGrupo = request.session["materiaGrupo"]
     print materiaGrupo
     alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
@@ -614,9 +621,11 @@ def reporte_lista(request):
     try:
         profesor=request.user
         atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-        materia=request.GET['materia']
-        materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+        materia=request.GET['materia'] 
+        materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+        materiaGrupo = materiaGrupo.filter(id=materia)[0]
         request.session["materiaGrupo"] = materiaGrupo
+        request.session["materia"] = materia
         alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
         resp = HttpResponse(mimetype='application/pdf')
         report = lista_alumnos(queryset=alumnos)
@@ -631,9 +640,13 @@ def reporte_evaluaciones(request):
     try:
         profesor=request.user
         atributos_profesor = Profesor.objects.filter(cve_usuario = profesor)[0]
-        materia=request.GET['materia']
-        materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=profesor)[int(materia)]
+        materia=request.GET['materia'] 
+        materiaGrupo = MateriaImpartidaEnGrupo.objects.filter(profesor=atributos_profesor)
+        print "1"
+        materiaGrupo = materiaGrupo.filter(id=materia)[0]
+        print "2"
         request.session["materiaGrupo"] = materiaGrupo
+        request.session["materia"] = materia
         alumnos = AlumnoTomaClaseEnGrupo.objects.filter(materia_grupo=materiaGrupo)
 
         resp = HttpResponse(mimetype='application/pdf')
